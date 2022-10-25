@@ -1,0 +1,24 @@
+<div id="err-modal" class="err-modal modal {{modalCls}}" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content text-center">
+            <div class="modal-header">
+                <span class="err-modal-icon icon-image">
+                    <em class="glyphicon glyphicon-alert"></em>
+                </span>
+                <button type="button" class="close-icon pull-right" (click)="closePopup()">X</button>
+                <p class="modal-title">
+                    <strong>{{headline}}</strong>
+                </p>
+            </div>
+            <div class="modal-body">
+                <p>{{message}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="b-button b-button__tertiary b-button__tertiary--light"
+                    (click)="closePopup()">
+                    Ok
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

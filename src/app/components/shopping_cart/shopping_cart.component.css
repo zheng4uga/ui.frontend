@@ -1,0 +1,17 @@
+.checkout{
+    border:1px solid #000;
+}
+.cart-container {
+    margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
+}
+
+@media screen 
+  and (min-width: 1200px) 
+  and (-webkit-min-device-pixel-ratio: 1) { 
+    .cart-container{
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+}
+

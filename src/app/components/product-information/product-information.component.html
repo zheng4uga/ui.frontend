@@ -1,0 +1,31 @@
+<div class="container">
+    <br>
+    <div class="row header">
+        <div class="col-xs-12 col-md-8 eaton-title__eyebrow b-eyebrow-small">
+            <a *ngIf="data.learnMore" href="{{data.learnMore}}">
+                Learn More <i class="icon icon-chevron-right"></i>
+            </a>
+        </div>
+        <div class="col-xs-12 col-md-8">
+            <h1>{{data.productName}}</h1>
+            <br>
+            <h5>{{data.productSubtitle || ''}}</h5>
+            <br>
+        </div>
+    </div>
+    <div class="row content">
+        <div class="col-md-6">
+            <div><img [src]="data.image" alt="{{data.productName}}" class="img-responsive"></div>
+        </div>
+        <div class="col-md-6 description">
+            <br>
+            <h5>{{data.shortDescription}}</h5>
+            <div class="long" [innerHTML]="data.longDescription"></div>
+            <br />
+            <p>SKU: {{data.catalogId}}</p>
+            <div *ngIf="data.price">{{data.price | currency: 'USD'}}</div>
+            <app-addproduct-cart [json]="getAddToButtonData()"></app-addproduct-cart>
+        </div>
+    </div>
+</div>
+<app-err-message [data]="errorData()"></app-err-message>

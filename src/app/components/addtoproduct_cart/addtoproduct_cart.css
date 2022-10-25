@@ -1,0 +1,30 @@
+span.cart-err-modal-icon {
+    display: inline-block;
+    height: 5rem;
+    width: 5rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 50%;
+    background-color: #edf5fd;
+    color: #005eb8;
+}
+button.close-icon {
+    background: none;
+    border: none;
+    color: #0073bb;
+    font-weight: 600;
+}
+.modal-body {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+.cart-err-modal .modal-footer button {
+    padding: 8px;
+    min-width: 181px;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 18px;
+    letter-spacing: 0em;
+    text-align: center;
+    box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
+}

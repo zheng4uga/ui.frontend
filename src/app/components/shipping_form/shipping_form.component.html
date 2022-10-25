@@ -1,0 +1,119 @@
+<div class='shipping-form'>
+
+    <form id='shippingForm' [formGroup]='shippingForm' (ngSubmit)='onSubmit()'>
+        <div class='row'>
+
+            <!-- FIRST NAME -->
+            <div class='col-md-6 form-item'>
+                <label class='form-item-label' for='fname'> First Name </label>
+                <span class='form-required'>*</span>
+                <input id='fname' type='text' formControlName='firstName' required maxlength='40' />
+                <div *ngIf='submitted && formControls.firstName.errors' class='error-message'>
+                    <div *ngIf='formControls.firstName.errors.required'>
+                        First name is required
+                    </div>
+                </div>
+            </div>
+
+            <!-- LAST NAME -->
+            <div class='col-md-6 form-item'>
+                <label class='form-item-label' for='lname'> Last Name </label>
+                <span class='form-required'>*</span>
+                <input id='lname' type='text' formControlName='lastName' required maxlength='40' />
+                <div *ngIf='submitted && formControls.lastName.errors' class='error-message'>
+                    <div *ngIf='formControls.lastName.errors.required'>
+                        Last name is required
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- COMAPNY -->
+        <div class='form-item'>
+            <label for='cName'> Company Name </label>
+            <span class='form-required'>*</span>
+            <input id='cName' type='text' formControlName='companyName' required maxlength='30'/>
+            <div *ngIf='submitted && formControls.companyName.errors' class='error-message'>
+                <div *ngIf='formControls.companyName.errors.required'>
+                    Company name is required
+                </div>
+            </div>
+        </div>
+
+        <!-- COUNTRY -->
+        <div class='form-item'>
+            <label for='countryName'>Country</label>
+            <span class='form-required'>*</span>
+            <select id='countryName' formControlName='countryName' (change)='changeCountry($event.target.value)'>
+                <option value=''>-Select-</option>
+                <option *ngFor='let countryItem of countryList' [value]='countryItem.countryId'>
+                    {{ countryItem.countryName }}
+                </option>
+            </select>
+            <div *ngIf='submitted && formControls.countryName.errors' class='error-message'>
+                <div *ngIf='formControls.countryName.errors.required'>
+                    Country is required
+                </div>
+            </div>
+        </div>
+
+        <!-- ADDRESS -->
+        <div class='form-item'>
+            <label for='address'> Address</label>
+            <span class='form-required'>*</span>
+            <input id='address' type='text' formControlName='addressLineOne' required maxlength='100'/>
+            <div *ngIf='submitted && formControls.addressLineOne.errors' class='error-message'>
+                <div *ngIf='formControls.addressLineOne.errors.required'>
+                    Company name is required
+                </div>
+            </div>
+        </div>
+        <div class='form-item'>
+            <input id='address' type='text' formControlName='addressLineTwo' maxlength='100'/>
+        </div>
+
+        <div class='row'>
+            <!-- CITY -->
+            <div class='col-md-4 form-item'>
+                <label for='cityName'>City</label>
+                <span class='form-required'>*</span>
+                <input id='cityName' type='text' formControlName='cityName' required maxlength='100'/>
+                <div *ngIf='submitted && formControls.cityName.errors' class='error-message'>
+                    <div *ngIf='formControls.cityName.errors.required'>
+                        City is required
+                    </div>
+                </div>
+            </div>
+
+            <!-- STATE -->
+            <div class='col-md-4 form-item'>
+                <label for='stateName'>State</label>
+                <span class='form-required'>*</span>
+                <select id='stateName' formControlName='stateName'>
+                    <option value=''>-Select-</option>
+                    <option *ngFor='let stateItem of stateList' [ngValue]='stateItem.stateId'>
+                        {{ stateItem.stateName }}
+                    </option>
+                </select>
+                <div *ngIf='submitted && formControls.stateName.errors' class='error-message'>
+                    <div *ngIf='formControls.stateName.errors.required'>
+                        State is required
+                    </div>
+                </div>
+            </div>
+
+            <!-- POSTAL CODE -->
+            <div class='col-md-4 form-item'>
+                <label for='postalCode'>Postal code</label>
+                <span class='form-required'>*</span>
+                <input id='postalCode' type='text' formControlName='postalCode' required maxlength='15'/>
+                <div *ngIf='submitted && formControls.postalCode.errors' class='error-message'>
+                    <div *ngIf='formControls.postalCode.errors.required'>
+                        Postal code is required
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>

@@ -1,0 +1,168 @@
+<div class="row-fluid">
+    <h1 class="order-review__title">Review and Submit Your Order</h1>
+</div>
+<hr>
+<div class="row">
+    <div class="col-md-8">
+        <h3 class="order_payment-info-title">Payment information</h3>
+        <hr>
+        <div class="row">
+            <div class="col-md-6">
+                <h5>Payment method</h5>
+                <div class="cred-card-details">
+                    <span class="pull-left">
+                        <span
+                            *ngIf="(usedCard.creditCardType|lowercase)!=='visa'&&(usedCard.creditCardType|lowercase)!=='american express'&&(usedCard.creditCardType|lowercase)!=='mastercard'"
+                            class="credit-card-logo">
+                            <span class="glyphicon glyphicon-credit-card"></span>
+                        </span>
+                        <img *ngIf="(usedCard.creditCardType|lowercase)=='visa'" [src]="logos.visa"
+                            class="credit-card-logo margin-right-md" alt="{{usedCard.creditCardType}}">
+                        <img *ngIf="(usedCard.creditCardType|lowercase)=='american express'" [src]="logos.amex"
+                            class="credit-card-logo margin-right-md" alt="{{usedCard.creditCardType}}">
+                        <img *ngIf="(usedCard.creditCardType|lowercase)=='mastercard'" [src]="logos.mc"
+                            class="credit-card-logo margin-right-md" alt="{{usedCard.creditCardType}}">
+                    </span>
+                    <p>
+                        <span><strong>{{usedCard.creditCardType}}</strong></span><br>
+                        <span><strong>{{getMaskCardNumber()}}</strong></span>
+                        <span> - </span>
+                        <span>Exp.{{usedCard.expirationMonth}}/{{usedCard.expirationYear}}</span>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h5>Billing Address</h5>
+                <p><strong>{{usedCard.firstName}} {{usedCard.lastName}}</strong></p>
+                <p>{{usedCard.creditCardBillingAddress.addressLine1}} <br>
+                    <span>{{usedCard.creditCardBillingAddress.addressLine2}}</span>
+                    <span> {{usedCard.creditCardBillingAddress.city}}</span>
+                    <span> {{usedCard.creditCardBillingAddress.state}}</span>
+                    <span> {{usedCard.creditCardBillingAddress.postalCode}}</span>
+                    <span> {{usedCard.creditCardBillingAddress.country}}</span>
+                </p>
+            </div>
+        </div>
+        <br><br>
+        <h3 class="order_payment-info-title">Item Summary</h3>
+        <hr>
+        <div class="product-listview">
+            <div class="product-listview__item" *ngFor="let cartItem of cartItems">
+                <div class="card">
+                    <p class="hidden-md hidden-lg cart-container__product-title"><a
+                            href="#"><b>{{cartItem.title}}</b></a>
+                    </p>
+                    <div class="card-body row">
+                        <div class="col-md-2 col-xs-5 col-sm-3">
+                            <img class="product-img" [src]="cartItem.image" alt="{{cartItem.title}}" />
+                        </div>
+                        <div class="col-md-7 row p-y-none col-sm-6 col-xs-7">
+                            <div class="col-md-7 cart-container__product-info">
+                                <ul class="list-group">
+                                    <li class="list-group-item borderless p-x-none p-y-none hidden-xs hidden-sm"><a
+                                            href="#"><b>{{cartItem.title}}</b></a></li>
+                                    <li class="list-group-item borderless p-x-none p-y-none"><b>category#:
+                                        </b>{{cartItem.catalogNumber}}</li>
+                                    <li class="list-group-item borderless p-x-none p-y-none">
+                                        <b>{{data?.unitPriceText}}:
+                                        </b>{{cartItem.unitPrice | currency: cartItem.currency}}
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-5 cart-container__increment">
+                                <div class="input-group input-tool" role="group">
+                                    <div class="form-group form-group-lg">
+                                        <b>Qty:</b>{{ cartItem.quantity}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 cart-container__pricing text-right col-sm-3 hidden-xs">
+                            <p>
+                                <b>{{data?.priceText}} </b> {{ cartItem.unitPrice * cartItem.quantity | currency:
+                                cartItem.currency }}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="card-footer row hidden-md hidden-lg hidden-sm">
+                        <div class="col-xs-6">
+                            <p><b>{{data?.priceText}} </b></p>
+                            <p>{{ cartItem.unitPrice * cartItem.quantity | currency: cartItem.currency }}</p>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="order-summary jumbotron">
+            <div class="order-summary__title row">
+                <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6 summary-text">
+                    <b>{{ordersummary?.orderSummaryText}}</b>
+                </div>
+                <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6 text-right summary-link">
+                    <a href="javascript:void(0)" (click)="backToPayment()">{{data?.backToPaymentLinkText}}</a>
+                </div>
+            </div>
+            <hr />
+            <div class="order-summary__subtotal row">
+                <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
+                    <b>{{ordersummary?.subtotalText}}</b>
+                </div>
+                <div class=" col-md-6 col-xs-6 col-sm-6 col-lg-6 text-right">
+                    <b>{{simulationPayload.orderSimResponse.orderSubtotal | currency:'USD'}}</b>
+                </div>
+                <br />
+            </div>
+            <div class="order-summary__subtotal row">
+                <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
+                    <b>{{ordersummary?.salesTotalText}}</b>
+                </div>
+                <div class=" col-md-6 col-xs-6 col-sm-6 col-lg-6 text-right">
+                    <b>{{getAllTaxes() | currency:'USD'}}</b>
+                </div>
+                <br />
+            </div>
+            <div class="order-summary__estimatetotal row">
+                <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
+                    <b>{{ordersummary?.estimatedTotalText}}</b>
+                </div>
+                <div class=" col-md-6 col-xs-6 col-sm-6 col-lg-6 text-right">
+                    <b>{{simulationPayload.orderSimResponse.orderTotal | currency:'USD'}}</b>
+                </div>
+
+            </div>
+            <div class="underline">
+                <input type="checkbox" [(ngModel)]="agreementChecked" required
+                    class="form-control count-input checkboxsmaill">
+                <div id="tcContainer" class="checkbox" [innerHTML]="tcText">{{data?.termsAndConditionsCheckboxText}}
+                </div>
+            </div>
+            <div>
+                <input type="checkbox" class="form-control count-input checkboxsmaill">
+                <div class="checkbox front"><b>{{ordersummary?.marketingAndCommunicationsText}}</b></div>
+            </div>
+            <br />
+            <button (click)="goNext()" [disabled]="!agreementChecked"
+                class="order-summary__nextbtn b-button b-button__tertiary b-button__tertiary--light">
+                {{data?.placeOrderButtonText}}
+            </button>
+        </div>
+        <p class="text-center"> <strong> Need a help? </strong> call 1888-888-8888</p>
+    </div>
+</div>
+
+<div id="tcModal" class="tcModal modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header etn-blue-bg">
+                <h3>Terms & conditions
+                    <span class="pull-right" data-dismiss="modal">✕</span>
+                </h3>
+            </div>
+            <div class="modal-body" [innerHTML]="ordersummary.modal.termsAndConditions">
+            </div>
+        </div>
+    </div>
+</div>

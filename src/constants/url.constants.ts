@@ -1,0 +1,1 @@
+export const FIELD_LISTS = '/eaton/my-eaton/fields';

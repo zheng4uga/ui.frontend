@@ -1,0 +1,213 @@
+<div class="add-edit-card">
+    <!-- Trigger the modal with a button -->
+    <button type="button" class="b-button {{data.styleCls || 'b-button__primary b-button__primary--light'}}"
+        data-toggle="modal" data-target="#payment-info-modal" (click)="initializeFlex()">{{data.addCardButton ||
+        data.addCreditCardButtonText || 'Add Credit Card'}}</button>
+</div>
+<!-- modal -->
+
+<div id="payment-info-modal" class="payment-info-modal modal" [class.show]="editMode" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content gray-bg">
+            <div class="modal-header etn-blue-bg">
+                <h3 *ngIf="!editMode">{{data.addCardModelTitle || data.addCreditCardTitleText|| 'Edit Credit Card'}}
+                    <span class="pull-right" data-dismiss="modal" (click)="editMode=false;editData=null">
+                        ✕
+                    </span>
+                </h3>
+                <h3 *ngIf="editMode">{{data.editCreditCardTitleText || 'Edit Credit Card'}}
+                    <span class="pull-right" data-dismiss="modal" (click)="editMode=false;editData=null">
+                        ✕
+                    </span>
+                </h3>
+            </div>
+            <div class="modal-body">
+                <div class='payment-info-form'>
+                    <br>
+                    <form id='paymentInfoForm' name="paymentInfoForm" action='token.jsp' [formGroup]='paymentInfoForm'>
+                        <div class='row'>
+                            <!-- Name on card -->
+                            <div class='col-md-6 form-item'>
+                                <label class='form-item-label' for='firstName'>{{data.firstNameInputLabel || 'First
+                                    Name'}}
+                                </label>
+                                <span class='form-required'>*</span>
+                                <input id='firstName' type='text' formControlName='firstName' required maxlength='80' />
+                                <div *ngIf='submitted && formControls.firstName.errors' class='error-message'>
+                                    <div *ngIf='formControls.firstName.errors.required'>
+                                        {{data.firstNameRequiredLabel || ' Name is required'}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='col-md-6 form-item'>
+                                <label class='form-item-label' for='lastName'>{{data.lastNameInputLabel || 'Last
+                                    Name'}}</label>
+                                <span class='form-required'>*</span>
+                                <input id='lastName' type='text' formControlName='lastName' required maxlength='80' />
+                                <div *ngIf='submitted && formControls.lastName.errors' class='error-message'>
+                                    <div *ngIf='formControls.lastName.errors.required'>
+                                        {{data.lastNameRequiredLabel || 'Last Name is required'}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='row'>
+                            <!-- Card Number -->
+                            <div class='col-md-6 form-item'>
+                                <label id="cardNumber-label" class='form-item-label'>{{data.creditCardInputLabel ||
+                                    'Card Number'}}
+                                </label>
+                                <span class='form-required'>*</span>
+                                <div id="number-container" class="form-control"></div>
+                                <div id="errors-output"></div>
+                            </div>
+
+                            <div class='col-md-4 col-md-offset-2 form-item'>
+                                <label class='form-item-label' for='expDate'>{{data.expiryDateInputLabel || ' Exp.
+                                    Date'}} </label>
+                                <span class='form-required'>*</span>
+                                <input id='expDate' type='month' formControlName='expDate' required />
+                                <div *ngIf='submitted && formControls.expDate.errors' class='error-message'>
+                                    <div *ngIf='formControls.expDate.errors.required'>
+                                        {{data.expiryDateRequiredLabel || ' Exp Date is invalid'}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class='row'>
+                            <!-- CVV -->
+                            <div class='col-md-2 form-item'>
+                                <label for="securityCode-container"
+                                    class='form-item-label'>{{data.securityCodeInputLabel ||
+                                    'CVV'}}</label>
+                                <span class='form-required'>*</span>
+                                <div id="securityCode-container" class="form-control"></div>
+                            </div>
+                            <!-- STATE -->
+                            <div class='col-md-6 col-md-offset-4 form-item'>
+                                <!-- COUNTRY -->
+                                <div class='form-item'>
+                                    <label class='form-item-label' for='countryName'>{{data.countryInputLabel ||
+                                        'Country'}}</label>
+                                    <span class='form-required'>*</span>
+                                    <select id='countryName' formControlName='countryName'
+                                        (change)='changeCountry($event.target.value)'>
+                                        <option value=''>-Select-</option>
+                                        <option *ngFor='let countryItem of countryList'
+                                            attr.data-country-code='{{countryItem.countryCode}}'
+                                            [value]='countryItem.countryId'>
+                                            {{ countryItem.countryName }}
+                                        </option>
+                                    </select>
+                                    <div *ngIf='submitted && formControls.countryName.errors' class='error-message'>
+                                        <div *ngIf='formControls.countryName.errors.required'>
+                                            {{data.countryRequiredLabel || 'Country is required'}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Billing Address -->
+                        <label class='form-item-label' for='addressLineOne'>{{data.billingAddressInputLabel || 'Billing
+                            Address'}}
+                        </label>
+                        <span class='form-required'>*</span>
+                        <div class='row'>
+                            <!-- Address Line 1 -->
+                            <div class='col-md-12 form-item'>
+                                <input id='addressLineOne' type='text' formControlName='addressLineOne' required
+                                    maxlength='50' #addressLineOne />
+                                <div *ngIf='submitted && formControls.addressLineOne.errors' class='error-message'>
+                                    <div *ngIf='formControls.addressLineOne.errors.required'>
+                                        {{data.billingAddressRequiredLabel || 'Billing address is required'}}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Address Line 2 -->
+                            <div class='col-md-12 form-item'>
+                                <input id='addressLineTwo' type='text' formControlName='addressLineTwo'
+                                    maxlength='50' />
+                            </div>
+                        </div>
+                        <div class='row'>
+                            <!-- CITY -->
+                            <div class='col-md-4 form-item'>
+                                <label class='form-item-label' for='cityName'>{{data.cityInputLabel || 'City'}}</label>
+                                <span class='form-required'>*</span>
+                                <input id='cityName' type='text' formControlName='cityName' required maxlength='100' />
+                                <div *ngIf='submitted && formControls.cityName.errors' class='error-message'>
+                                    <div *ngIf='formControls.cityName.errors.required'>
+                                        {{data.cityRequiredLabel || 'City is required'}}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- STATE -->
+                            <div class='col-md-4 form-item'>
+                                <label class='form-item-label' for='stateName'>{{data.stateNameInputLabel ||
+                                    'State'}}</label>
+                                <span class='form-required'>*</span>
+                                <select id='stateName' formControlName='stateName'>
+                                    <option value=''>-Select-</option>
+                                    <option *ngFor='let stateItem of stateList' [ngValue]='stateItem.stateId'>
+                                        {{ stateItem.stateName }}
+                                    </option>
+                                </select>
+                                <div *ngIf='submitted && formControls.stateName.errors' class='error-message'>
+                                    <div *ngIf='formControls.stateName.errors.required'>
+                                        {{data.stateNameRequiredLabel || 'State is required'}}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- POSTAL CODE -->
+                            <div class='col-md-4 form-item'>
+                                <label class='form-item-label' for='postalCode'>{{data.postalCodeInputLabel ||
+                                    'Postal code'}}</label>
+                                <span class='form-required'>*</span>
+                                <input id='postalCode' type='text' formControlName='postalCode' required
+                                    maxlength='15' />
+                                <div *ngIf='submitted && formControls.postalCode.errors' class='error-message'>
+                                    <div *ngIf='formControls.postalCode.errors.required'>
+                                        {{data.postalCodeRequiredLabel || 'Postal code is required'}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='row-fluid'>
+                            <div class='col-md-12 form-item'>
+                                <input type='checkbox' formControlName='makeDefault' name='makeDefault'
+                                    id='makeDefault'>&nbsp;
+                                <label class='form-item-label' for='makeDefault'>{{data.makeDefaultCardCheckboxLabel ||
+                                    'Make this card my default payment method'}} </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <re-captcha #captchaRef="reCaptcha" (resolved)="resolved($event)"></re-captcha>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row-fluid">
+                            <button *ngIf="!editMode" type="button" style="margin-right: 10px;"
+                                class="b-button b-button__tertiary b-button__tertiary--light" id="getTransient"
+                                [disabled]="!enableSave || paymentInfoForm.invalid">{{data.saveButton || data.saveButtonLabel || 'Save'}}
+                            </button>
+                            <button *ngIf="editMode" type="button" style="margin-right: 10px;"
+                                class="b-button b-button__tertiary b-button__tertiary--light"
+                                (click)="onUpdate()">{{data.updateButton || data.editButtonLabel || 'Update'}}
+                            </button>
+                            <button type="button" class="b-button b-button__primary b-button__primary--light"
+                                data-dismiss="modal" (click)="editMode=false;editData=null">
+                                {{data.cancelButton || data.cancelButtonLabel || 'Cancel'}}
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

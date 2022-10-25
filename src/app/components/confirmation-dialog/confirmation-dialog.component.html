@@ -1,0 +1,26 @@
+<div id="confirm-del-modal" class="confirm-del-modal modal show" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content text-center">
+            <div class="modal-header">
+                <span class="confirm-del-modal-icon icon-image">
+                    <em class="glyphicon glyphicon-bell"></em>
+                </span>
+                <button type="button" class="close-icon pull-right" (click)="decline()">X</button>
+                <p class="modal-title">
+                    <strong>Remove credit card</strong>
+                </p>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to remove this payment method?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class=" b-button b-button__tertiary b-button__tertiary--light color-change-blue" (click)="accept()">
+                    Yes, remove this payment method
+                </button>
+                <button type="button" class=" b-button b-button__tertiary b-button__tertiary--light color-change-white" (click)="decline()">
+                    No, do not remove this payment method
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,97 @@
+<div class="payment-info">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="row header">
+                <div class="col-md-6">
+                    <h1>{{paymentInformation.paymentInformationHeader}}</h1>
+                </div>
+                <div class="col-md-6">
+                    <app-add-edit-credit-card [data]="getCardData()" (newCardAdded)="refreshCCdetails($event)">
+                    </app-add-edit-credit-card>
+                </div>
+            </div>
+            <div *ngIf="!hasSavedCards">
+                <p><strong>{{paymentInformation.noCardOnFileTitle}}</strong></p>
+                <p [innerHTML]="paymentInformation.noCardOnFileDescription"></p>
+            </div>
+            <div *ngIf="hasSavedCards">
+                <!-- Saved Card -->
+                <div class="panel-group active" *ngFor="let card of cardDataObj; index as i">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <!-- if active uncommen nex line --- class -> collapsed & aria-expanded -> false -->
+                            <a data-toggle="collapse" attr.data-target="#collapse{{i}}" class="collapse">
+                                <span class="card-selector" (click)="selectThis(i)" [class.no-select]="expdates[i]"
+                                    [ngClass]="card.isDefault && !expdates[i] ? 'active-card' : 'in active-card'"></span>
+                                <span
+                                    *ngIf="(card.creditCardType|lowercase)!=='visa'&&(card.creditCardType|lowercase)!=='american express'&&(card.creditCardType|lowercase)!=='mastercard'"
+                                    class="credit-card-logo">
+                                    <span class="glyphicon glyphicon-credit-card"></span>
+                                </span>
+                                <img *ngIf="(card.creditCardType|lowercase)=='visa'" [src]="logos.visa"
+                                    class="credit-card-logo" alt="">
+                                <img *ngIf="(card.creditCardType|lowercase)=='american express'" [src]="logos.amex"
+                                    class="credit-card-logo" alt="">
+                                <img *ngIf="(card.creditCardType|lowercase)=='mastercard'" [src]="logos.mc"
+                                    class="credit-card-logo" alt="">
+                                <span class="credit-card-name">{{(card.creditCardType)}}</span>
+                                <span *ngIf="(card.creditCardType|lowercase)=='american express'"
+                                    class="credit-card-num">*****-*****-{{card.creditCardNumber}}</span>
+                                <span *ngIf="(card.creditCardType|lowercase)!=='american express'"
+                                    class="credit-card-num">****-****-****-{{card.creditCardNumber}}</span>
+                                <span class="credit-card-exp-date">- Exp.
+                                    {{card.expirationMonth}}/{{card.expirationYear}}</span>
+                            </a>
+                            <div class="credit-card-default">
+                                <span *ngIf="expdates[i]" class="expired">{{card.Expired || 'Expired'}}</span>
+                                <a href="javascript:void(0)" (click)="deleteCardPopup(card.paymentToken)"
+                                    class="delete"> <span class="glyphicon glyphicon-trash"></span></a>
+                            </div>
+                        </div>
+                        <div id="collapse{{i}}" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <p class="dark-grey-clr"><strong>Billing Address</strong></p>
+                                <span class="dark-grey-clr"><strong>{{card.firstName}} {{card.lastName}}</strong></span>
+                                <address>
+                                    <span>{{card.creditCardBillingAddress.addressLine1}}</span>
+                                    <span>{{card.creditCardBillingAddress.addressLine2}},</span>
+                                    <span>{{card.creditCardBillingAddress.city}},</span>
+                                    <span>{{card.creditCardBillingAddress.state}}</span>
+                                    <span>{{card.creditCardBillingAddress.postalCode}}</span>
+                                    <span>{{card.creditCardBillingAddress.country}}</span>
+                                </address>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="order-summary jumbotron">
+                <div class="order-summary__title row">
+                    <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6 summary-text">
+                        <b>{{ordersummary?.orderSummaryText}}</b>
+                    </div>
+                    <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6 text-right summary-link">
+                        <a href="javascript:void(0)" (click)="backToCart()">{{ordersummary?.backToCartText}}</a>
+                    </div>
+                </div>
+                <hr />
+                <div class="order-summary__subtotal row">
+                    <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
+                        <b>{{ordersummary?.subtotalText}}</b>
+                    </div>
+                    <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6 text-right">
+                        <b>{{subtotal | currency:'USD'}}</b>
+                    </div>
+                </div>
+                <br />
+                <button [disabled]="selectedCard===undefined" (click)="goNext()"
+                    class="order-summary__nextbtn b-button b-button__tertiary b-button__tertiary--light">
+                    {{ordersummary?.continueToOrderReviewText}}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

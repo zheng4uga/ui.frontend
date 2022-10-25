@@ -1,0 +1,35 @@
+<div class="{{buttonAlignment}}">
+    <a role="button" class="{{buttonClassText()}}" (click)="addItemToCart()">{{data.buttonText || 'Add Product'}}
+    </a>
+</div>
+<div id="cart-err-modal" class="cart-err-modal modal {{modalCls}}" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <span  class="cart-err-modal-icon icon-image">
+                    <img *ngIf="data.modal.icon" [src]="data.modal.icon" alt="checkout-icon" class="img-circle img-responsive">
+                     <i *ngIf="!data.modal.icon" class="glyphicon glyphicon-bell"></i>
+                </span>
+                <button type="button" class="close-icon pull-right" (click)="closePopup()">X</button>
+                <p class="modal-title">
+                    <strong>{{data.modal.title}}</strong>
+                </p>
+            </div>
+            <div class="modal-body" [innerHtml]="data.modal.description"></div>
+            <div class="modal-footer row-fluid">
+                <div class="col-md-6">
+                    <button type="button" class="b-button b-button__tertiary b-button__tertiary--light"
+                        (click)="keepMyExistingCart()">
+                        {{data.modal.keepMyCartButtonText}}
+                    </button>
+                </div>
+                <div class="col-md-6">
+                    <button type="button" class="b-button b-button__primary b-button__primary--light"
+                        (click)="createNewCart()">
+                        {{data.modal.createNewCartButtonText}}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

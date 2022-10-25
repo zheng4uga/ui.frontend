@@ -1,0 +1,133 @@
+<div class="order-confirmation__container">
+    <div class="row">
+        <div class="col-md-8">
+            <h1>{{data.orderHeader}}</h1>
+            <p [innerHTML]="data.orderText"></p>
+        </div>
+        <div class="col-md-4">
+            <div class="col-md-6">
+                <p> <strong>{{data.orderNumber}}:</strong></p>
+                <span>{{orderSubmitResponse.orderSubmitResponse.orderId}}</span>
+            </div>
+            <div class="col-md-6">
+                <p><strong>{{data.orderDate}}:</strong></p>
+                <span>{{currentDate | date:'MM-dd-yyyy'}}</span>
+            </div>
+        </div>
+    </div>
+    <br>
+    <hr>
+    <div class="row">
+        <div class="col-md-8">
+            <br>
+            <h3>Payment Information</h3>
+            <hr><br>
+            <div class="row">
+                <div id="payment-method" class="col-md-6">
+                    <p class="subtitle"> <strong>Payment Method</strong> </p>
+                    <span class="pull-left">
+                        <span
+                            *ngIf="(usedCard.creditCardType|lowercase)!=='visa'&&(usedCard.creditCardType|lowercase)!=='american express'&&(usedCard.creditCardType|lowercase)!=='mastercard'"
+                            class="credit-card-logo">
+                            <span class="glyphicon glyphicon-credit-card"></span>
+                        </span>
+                        <img *ngIf="(usedCard.creditCardType|lowercase)=='visa'" [src]="logos.visa"
+                            class="credit-card-logo margin-right-md" alt="{{usedCard.creditCardType}}">
+                        <img *ngIf="(usedCard.creditCardType|lowercase)=='american express'" [src]="logos.amex"
+                            class="credit-card-logo margin-right-md" alt="{{usedCard.creditCardType}}">
+                        <img *ngIf="(usedCard.creditCardType|lowercase)=='mastercard'" [src]="logos.mc"
+                            class="credit-card-logo margin-right-md" alt="{{usedCard.creditCardType}}">
+                    </span>
+                    <p>
+                        <span><strong>{{usedCard.creditCardType}}</strong></span><br>
+                        <span>{{getMaskCardNumber()}}</span>
+                        <span> - Exp. {{usedCard.expirationMonth}}/{{usedCard.expirationYear}}</span>
+                    </p>
+                </div>
+                <div id="billing-address" class="col-md-6">
+                    <p class="subtitle"> <strong>Billing Address</strong> </p>
+                    <p>
+                        <span id="username"> <strong>{{usedCard.firstName}} {{usedCard.lastName}}</strong> </span>
+                        <br>
+                        <span id="useraddress1">{{usedCard.creditCardBillingAddress.addressLine1}}
+                            {{usedCard.creditCardBillingAddress.addressLine2}}</span>
+                        <br>
+                        <span id="useraddress2">
+                            {{usedCard.creditCardBillingAddress.city}}
+                            {{usedCard.creditCardBillingAddress.state}}
+                            {{usedCard.creditCardBillingAddress.postalCode}}
+                            {{usedCard.creditCardBillingAddress.country}}</span>
+                    </p>
+                </div>
+            </div>
+            <br>
+            <h3>Item Summary</h3>
+            <hr>
+            <div class="card">
+                <div *ngFor="let cartItem of cartItems">
+                    <div class="card-body row">
+                        <div class="col-md-2 col-xs-5 col-sm-3">
+                            <img class="product-img" [src]="cartItem.image" alt="" />
+                        </div>
+                        <div class="col-md-7 row p-y-none col-sm-6 col-xs-7">
+                            <div class="col-md-7 cart-container__product-info">
+                                <ul class="list-group">
+                                    <li class="list-group-item borderless p-x-none p-y-none hidden-xs hidden-sm"><a
+                                            href="#"><strong>{{cartItem.title}}</strong></a></li>
+                                    <li class="list-group-item borderless p-x-none p-y-none"><strong>Catalog #:
+                                        </strong>{{cartItem.catalogNumber}}</li>
+                                    <li class="list-group-item borderless p-x-none p-y-none"><strong>Unit Price:
+                                        </strong>{{cartItem.unitPrice | currency: cartItem.currency}}</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-5 cart-container__increment">
+                                <p class=""> <strong>QTY: </strong>{{cartItem.quantity}}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 cart-container__pricing text-right col-sm-3 hidden-xs">
+                            <p>{{cartItem.unitPrice * cartItem.quantity | currency: cartItem.currency}}</p>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="order-summary jumbotron">
+                <div class="order-summary__title row">
+                    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 summary-text">
+                        <b>{{ordersummary?.orderSummaryText}}</b>
+                    </div>
+                </div>
+                <hr />
+                <div class="order-summary__subtotal row">
+                    <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
+                        <b>{{ordersummary?.subtotalText}}</b>
+                    </div>
+                    <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6 text-right">
+                        <b>{{simulationPayload.orderSimResponse.orderSubtotal | currency:'USD'}}</b>
+                    </div>
+                </div>
+                <br />
+                <div class="order-summary__salestax row">
+                    <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
+                        <b>{{ordersummary?.salesTotalText}}</b>
+                    </div>
+                    <div class=" col-md-6 col-xs-6 col-sm-6 col-lg-6 text-right">
+                        <b>{{getAllTaxes() | currency:'USD'}}</b>
+                    </div>
+                    <br />
+                </div>
+                <br />
+                <div class="order-summary__total row">
+                    <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
+                        <b>{{ordersummary?.orderTotalText}}</b>
+                    </div>
+                    <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6 text-right">
+                        <b>{{simulationPayload.orderSimResponse.orderTotal | currency:'USD'}}</b>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

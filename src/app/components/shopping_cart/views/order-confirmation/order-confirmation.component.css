@@ -1,0 +1,127 @@
+img.credit-card-logo {
+    margin-right: 30px;
+    width: 58px;
+}
+.credit-card-logo {
+    display: inline-flex;
+    vertical-align: middle;
+    width: 6rem;
+    margin-right: 2rem;
+    text-align: center;
+}
+.credit-card-logo span.glyphicon {
+    text-align: center;
+    margin: auto;
+    font-size: 4rem;
+}
+p.subtitle {
+    font-size: 1.6rem;
+}
+.margin-right-md {
+    margin-right: 2.5em;
+}
+p.strikeThrough {
+    text-decoration: line-through;
+}
+.product-img {
+    width: 102px;
+    height: 102px;
+}
+.count-input {
+    text-align: center;
+}
+.cart-container__product-info ul.list-group li:first-child {
+    margin-bottom: 10px;
+}
+.cart-container__product-info ul.list-group li:nth-child(2) {
+    margin-bottom: 5px;
+}
+.cart-container__product-info ul.list-group {
+    margin-bottom: 0px !important;
+}
+.input-tool {
+    margin-top: 1.25rem;
+}
+.input-tool button.btn.btn-default.btn-lg {
+    border-radius: 0rem !important;
+    width: 45px;
+}
+.input-tool button.btn.btn-default.btn-lg svg {
+    position: relative;
+    top: 0px;
+}
+.cart-container__increment {
+    max-width: 169px;
+}
+
+.removeLink {
+    margin-top: 28px;
+}
+@media (max-width: 767px) {
+    .cart-container__product-info ul.list-group {
+        font-size: 14px !important;
+    }
+    .cart-container__product-title {
+        max-width: 272px;
+    }
+}
+
+.order-summary {
+    padding: 2.5rem;
+    border-radius: 0px;
+    background-color: #f8f8f8;
+}
+
+.order-summary .order-summary__title .summary-link {
+    font-size: 16px;
+}
+.order-summary .order-summary__title .summary-text {
+    font-size: 18px;
+}
+.order-summary .order-summary__subtotal {
+    font-size: 14px;
+}
+.order-summary .order-summary__discount {
+    font-size: 12px;
+}
+.order-summary .order-summary__total {
+    font-size: 18px;
+}
+
+.product-img {
+    width: 102px;
+    height: 102px;
+}
+.count-input {
+    text-align: center;
+}
+.cart-container__pricing {
+    margin-top: 1.25rem;
+}
+.cart-container__product-info ul.list-group li:first-child {
+    margin-bottom: 10px;
+}
+.cart-container__product-info ul.list-group li:nth-child(2) {
+    margin-bottom: 5px;
+}
+.cart-container__product-info ul.list-group {
+    margin-bottom: 0px !important;
+}
+.input-tool {
+    margin-top: 1.25rem;
+}
+.input-tool button.btn.btn-default.btn-lg {
+    border-radius: 0rem !important;
+    width: 45px;
+}
+.input-tool button.btn.btn-default.btn-lg svg {
+    position: relative;
+    top: 0px;
+}
+.cart-container__increment {
+    max-width: 169px;
+}
+.order-summary button {
+    width: 100%;
+    padding: 2rem 0;
+}

@@ -1,0 +1,20 @@
+<div class="cart-container container">
+    <div class="cart-container__views ">
+        <ngx-spinner
+        bdColor="rgba(240, 240, 240,0.2)"
+        size = "medium"
+        color = "#1e90ff"
+        type = "ball-clip-rotate">
+       </ngx-spinner>
+        <app-product-list-view (proceed)="proceedToNextStep($event)" [data]="data.productListing"
+            *ngIf="showProductList.getValue()" [ordersummary]="data.orderSummary"></app-product-list-view>
+        <app-order-review (proceed)="proceedToNextStep($event)" [data]="orderReviewData()"
+            *ngIf="showOrderReview.getValue()" [ordersummary]="data.orderSummary"></app-order-review>
+        <app-order-confirmation [data]="data.orderConfirmation" *ngIf="showOrderConfirmation.getValue()"
+            [ordersummary]="data.orderSummary"></app-order-confirmation>
+        <app-payment-information (proceed)="proceedToNextStep($event)" *ngIf="showPayment.getValue()" [paymentInformation]="data.paymentInformation"
+            [ordersummary]="data.orderSummary">
+        </app-payment-information>
+    </div>
+</div>
+<app-err-message [data]="errorData()"></app-err-message>

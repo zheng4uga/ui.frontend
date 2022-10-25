@@ -1,0 +1,34 @@
+.product-listview__item {
+    border-bottom: 1px solid #ddd;
+    padding: 20px 0px;
+}
+.order-summary {
+    padding: 2.5rem;
+    border-radius: 0px;
+    background-color: #f8f8f8;
+}
+.order-summary .order-summary__nextbtn {
+    width: 100% !important;
+    padding: 2rem 0;
+}
+.order-summary .order-summary__title .summary-link {
+    font-size: 16px;
+}
+.order-summary .order-summary__title .summary-text {
+    font-size: 18px;
+}
+.order-summary .order-summary__subtotal {
+    font-size: 20px;
+}
+.cart-container__title {
+    margin-bottom: 3.5rem;
+}
+button:disabled,
+button[disabled],
+button:disabled:hover,
+button[disabled]:hover {
+    cursor: not-allowed;
+    background-color: #bebebe !important;
+    border-color:#bebebe !important;
+    color:#ffffff !important;
+}

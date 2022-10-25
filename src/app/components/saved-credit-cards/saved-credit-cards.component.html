@@ -1,0 +1,58 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <p>{{data.messageText}}</p>
+        </div>
+        <div class="col-md-4">
+            <app-add-edit-credit-card [data]="creditCardFormData()" [editData]="editThisCreditCard"
+                (newCardAdded)="refreshCCdetails($event)">
+            </app-add-edit-credit-card>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-10">
+            <table class="table my-saved-credit-cards">
+                <thead>
+                    <tr>
+                        <th>{{data.defaultText}}</th>
+                        <th>{{data.crediCardDetailsText}}</th>
+                        <th>{{data.expirationDateText}}</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let cred of credetails; let i = index">
+                        <td>
+                            <input type="radio" name="card" id="card-{{i}}" [value]="cred.default? 'default':''"
+                                (click)="makeDefault($event, i)" [checked]="cred.isDefault" disabled>
+                        </td>
+                        <td>
+                            <span
+                                *ngIf="(cred.creditCardType|lowercase)!=='visa'&&(cred.creditCardType|lowercase)!=='american express'&&(cred.creditCardType|lowercase)!=='mastercard'"
+                                class="credit-card-logo">
+                                <span class="glyphicon glyphicon-credit-card"></span>
+                            </span>
+                            <img *ngIf="(cred.creditCardType|lowercase)=='visa'" [src]="logos.visa"
+                                class="credit-card-logo" alt="">
+                            <img *ngIf="(cred.creditCardType|lowercase)=='american express'" [src]="logos.amex"
+                                class="credit-card-logo" alt="">
+                            <img *ngIf="(cred.creditCardType|lowercase)=='mastercard'" [src]="logos.mc"
+                                class="credit-card-logo" alt="">
+
+                            {{cred.creditCardType}} ending in
+                            {{cred.creditCardNumber}}
+                            <span *ngIf="expdates[i]" class="expired">{{data.Expired || 'Expired'}}</span>
+                        </td>
+                        <td [class.expired]="expdates[i]">{{cred.expirationMonth}}/{{cred.expirationYear}}</td>
+                        <td>
+                            <a href="javascript:void(0)" (click)="deleteCardPopup(i)">{{data.deleteCardText}}</a>
+                            <span class="divider">|</span>
+                            <a href="javascript:void(0)" (click)="editData(i)">{{data.editText}}</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
